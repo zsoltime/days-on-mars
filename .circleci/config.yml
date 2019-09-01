@@ -12,6 +12,11 @@ aliases:
       keys:
         - v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
 
+  install_cypress_deps: &install_cypress_deps
+    run:
+      name: Install Cypress dependencies
+      command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+
   install_npm_packages: &install_npm_packages
     run:
       name: Install NPM dependencies
@@ -30,9 +35,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Install Cypress dependencies
-          command: sudo apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+      - <<: *install_cypress_deps
       - run:
           name: Update NPM
           command: sudo npm install -g npm@latest
@@ -45,6 +48,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - <<: *install_cypress_deps
       - <<: *restore_cache
       - <<: *install_npm_packages
       - run:
