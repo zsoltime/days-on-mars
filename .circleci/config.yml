@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/project
   docker:
-    - image: cypress/base:12
+    - image: cypress/base:10
 
 aliases:
   restore_cache: &restore_cache
