@@ -1,0 +1,89 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/project
+  docker:
+    - image: circleci/node:12
+
+aliases:
+  restore_cache: &restore_cache
+    restore_cache:
+      name: Restore NPM packages from cache
+      keys:
+        - v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
+
+  install_npm_packages: &install_npm_packages
+    run:
+      name: Install NPM dependencies
+      command: npm install
+
+  save_cache: &save_cache
+    save_cache:
+      name: Save NPM packages to cache
+      key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
+      paths:
+        - ./node_modules
+
+jobs:
+  install_deps:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
+      - <<: *restore_cache
+      - <<: *install_npm_packages
+      - <<: *save_cache
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - run:
+          name: Run tests
+          command: npm test
+
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - run:
+          name: Create production build
+          command: npm run build
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - build
+
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /home/circleci/project
+      - <<: *restore_cache
+      - run:
+          name: Install Netlify CLI
+          command: sudo npm install netlify-cli -g
+      - run:
+          name: Deploy site to Netlify
+          command: netlify deploy --prod --dir=/home/circleci/project/build --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - install_deps
+      - test:
+          requires:
+            - install_deps
+      - build:
+          requires:
+            - test
+      - deploy:
+          context: Netlify
+          requires:
+            - build
