@@ -46,6 +46,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_cache
+      - <<: *install_npm_packages
       - run:
           name: Run tests
           command: npm test
@@ -55,6 +56,7 @@ jobs:
     steps:
       - checkout
       - <<: *restore_cache
+      - <<: *install_npm_packages
       - run:
           name: Create production build
           command: npm run build
@@ -70,6 +72,7 @@ jobs:
       - attach_workspace:
           at: /home/circleci/project
       - <<: *restore_cache
+      - <<: *install_npm_packages
       - run:
           name: Install Netlify CLI
           command: sudo npm install netlify-cli -g
