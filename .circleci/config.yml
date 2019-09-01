@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/project
   docker:
-    - image: circleci/node:12
+    - image: cypress/base:12
 
 aliases:
   restore_cache: &restore_cache
@@ -15,14 +15,15 @@ aliases:
   install_npm_packages: &install_npm_packages
     run:
       name: Install NPM dependencies
-      command: npm install
+      command: npm ci
 
   save_cache: &save_cache
     save_cache:
       name: Save NPM packages to cache
       key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
       paths:
-        - ./node_modules
+        - ~/.npm
+        - ~/.cache
 
 jobs:
   install_deps:
@@ -30,10 +31,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@latest'
+          name: Update NPM
+          command: sudo npm install -g npm@latest
       - <<: *restore_cache
       - <<: *install_npm_packages
+      - run: npm run cy:verify
       - <<: *save_cache
 
   test:
