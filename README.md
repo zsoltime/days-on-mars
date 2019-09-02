@@ -1,5 +1,21 @@
 # Days on Mars in Pictures
 
+> Days on Mars is a simple app to view images made by Mars rovers, built with React.js. The live preview is available on [Netlify](https://days-on-mars.netlify.com).
+
+The idea came from Alex Ren's [repo](https://github.com/able-leopard/a-day-in-the-life-on-mars) he posted in the [Software Development Mastery group](https://www.facebook.com/groups/softwaredevelopmentmastery/permalink/721387331606773/) as his first React app.
+
+## User Stories
+
+- [ ] As a site visitor, I can see a list of Mars rovers on the home page, so I can search for images it made.
+- [ ] As a site visitor, once I chose a rover, I can see a date picker, so I can search for images the rover made on that day.
+- [ ] As a site visitor, once I chose a rover and a data, I can click on a button to display the images, so I can see them.
+
+## Credits
+
+The project uses [CircleCI](https://circleci.com) to run the e2e and unit tests every time a new commit is pushed to Github. CircleCI also builds the app and deploys to [Netlify](https://netlify.com), so the latest updates are always available [here](https://days-on-mars.netlify.com).
+
+Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](https://www.flaticon.com) and licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -14,10 +30,18 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run test:unit`
 
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run test:e2e`
+
+Starts a development server and runs Cypress tests.
+
+### `npm test`
+
+Runs unit tests, starts a development server, and runs e2e tests.
 
 ### `npm run build`
 
@@ -28,43 +52,3 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
